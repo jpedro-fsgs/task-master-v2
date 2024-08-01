@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { Noto_Sans } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+import "./globals.css";
+import Link from "next/link";
+
+export const notoSans = Noto_Sans({ subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +18,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className=" bg-main-backgroundcolordarker">
+        <nav
+          className="fixed bottom-0 md:top-0 w-full font-notoSans bg-main-buttoncolor h-14 text-main-textcolor text-3xl font-bold flex items-center p-5 gap-5"
+        >
+          <Link href="/todo" className="hover:opacity-70">
+            Todo
+          </Link>
+          <Link href="/clock" className="hover:opacity-70">
+            Clock
+          </Link>
+          <Link href="/stopwatch" className="hover:opacity-70">
+            Stopwatch
+          </Link>
+        </nav>
+        {children}
+      </body>
     </html>
   );
 }
