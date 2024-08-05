@@ -1,9 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext } from "react";
 import { BsPause, BsPlay, BsStop } from "react-icons/bs";
 import { LiaFlagCheckeredSolid } from "react-icons/lia";
+import { StopwatchContext } from "../context/StopwatchContext";
 
 function formatStopwatch(time: number) {
   const milisseconds = time % 1000;
@@ -30,41 +31,43 @@ function formatSplit(time: number){
 }
 
 function Stopwatch() {
-  const [splitList, setSplitList] = useState<number[]>([]);
+  // const [splitList, setSplitList] = useState<number[]>([]);
 
-  const [stopwatch, setStopwatch] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const intervalRef = useRef<any>(null);
-  const startTime = useRef(0);
+  // const [stopwatch, setStopwatch] = useState(0);
+  // const [isRunning, setIsRunning] = useState(false);
+  // const intervalRef = useRef<any>(null);
+  // const startTime = useRef(0);
 
-  function handleStart() {
-    if (isRunning) return;
-    setIsRunning(true);
-    startTime.current = Date.now() - stopwatch;
-  }
-  function handleStop() {
-    setIsRunning(false);
-    setStopwatch(0);
-    setSplitList([]);
-    clearInterval(intervalRef.current);
-  }
-  function handlePause() {
-    setIsRunning(false);
-    clearInterval(intervalRef.current);
-  }
-  function handleSplit() {
-    if (splitList.includes(stopwatch) || stopwatch === 0) return;
-    const updatedSplitList = [...splitList, stopwatch];
-    setSplitList(updatedSplitList);
-  }
+  // function handleStart() {
+  //   if (isRunning) return;
+  //   setIsRunning(true);
+  //   startTime.current = Date.now() - stopwatch;
+  // }
+  // function handleStop() {
+  //   setIsRunning(false);
+  //   setStopwatch(0);
+  //   setSplitList([]);
+  //   clearInterval(intervalRef.current);
+  // }
+  // function handlePause() {
+  //   setIsRunning(false);
+  //   clearInterval(intervalRef.current);
+  // }
+  // function handleSplit() {
+  //   if (splitList.includes(stopwatch) || stopwatch === 0) return;
+  //   const updatedSplitList = [...splitList, stopwatch];
+  //   setSplitList(updatedSplitList);
+  // }
 
-  useEffect(() => {
-    if (isRunning) {
-      intervalRef.current = setInterval(() => {
-        setStopwatch(Date.now() - startTime.current);
-      }, 1);
-    }
-  }, [isRunning]);
+  // useEffect(() => {
+  //   if (isRunning) {
+  //     intervalRef.current = setInterval(() => {
+  //       setStopwatch(Date.now() - startTime.current);
+  //     }, 1);
+  //   }
+  // }, [isRunning]);
+
+  const { splitList, stopwatch, isRunning, handlePause, handleStart, handleStop, handleSplit } = useContext(StopwatchContext);
 
   return (
     <div className="bg-main-backgroundcolorlighter rounded max-w-[50rem] max-h-[80vh] mx-auto max-md:mx-5 p-10 mt-24 max-sm:mt-5 flex flex-col gap-9">
@@ -102,7 +105,7 @@ function Stopwatch() {
       </span>
       <div className="overflow-y-auto">
         <AnimatePresence>
-          {splitList.toReversed().map((split, index, array) => (
+          {splitList.toReversed().map((split: number, index: number, array: number[]) => (
             <motion.div
               key={split}
               className="bg-main-textcolor w-2/4 max-md:w-full p-1 mb-4 mx-auto flex font-notoSans text-xl font-semibold items-center justify-center rounded-sm"

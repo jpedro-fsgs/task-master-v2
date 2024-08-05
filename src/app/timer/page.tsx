@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { BsPlay, BsStop } from "react-icons/bs";
+import { BsPause, BsPlay, BsStop } from "react-icons/bs";
 
 function formatTimer(time: number) {
-  // return time;
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60);
   return `${minutes}:${String(seconds).padStart(2, "0")}`;
@@ -20,17 +19,15 @@ function Timer() {
   const intervalRef = useRef<any>(null);
 
   function handleStart() {
-    if (isRunning) return;
-    setTimer(
-      Number(inputRefMinutes.current.value) * 60 +
-        Number(inputRefSeconds.current.value)
-    );
+    console.log(1)
+    if (isRunning || timer === 0) return;
+    console.log(2)
     setIsRunning(true);
     intervalRef.current = setInterval(() => {
-      console.log("oi");
       setTimer((t) => {
         if (t <= 0) {
           clearInterval(intervalRef.current);
+          setIsRunning(false);
           inputRefMinutes.current.value = 0;
           inputRefSeconds.current.value = 0;
           return 0;
@@ -38,6 +35,12 @@ function Timer() {
         return t - 1;
       });
     }, 1000);
+  }
+
+  function handlePause() {
+    if (!isRunning) return;
+    setIsRunning(false);
+    clearInterval(intervalRef.current);
   }
 
   function handleStop() {
@@ -60,8 +63,20 @@ function Timer() {
         !inputRefSeconds.current.contains(document.activeElement)
       ) {
         setTimerFocus(false);
+        console.log(Number(inputRefMinutes.current.value));
+        setTimer(
+          (Number(inputRefMinutes.current.value) || 0) * 60 + (Number(inputRefSeconds.current.value) || 0)
+        );
       }
     }, 0);
+  }
+
+  function handleClick(){
+    setTimerFocus(true);
+    clearInterval(intervalRef.current);
+    setIsRunning(false);
+    inputRefMinutes.current.value = Math.floor(timer/60);
+    inputRefSeconds.current.value = timer % 60;
   }
 
   return (
@@ -72,13 +87,16 @@ function Timer() {
             "text-main-textcolor text-8xl max-md:text-6xl p-4 text-center font-notoSans" +
             (timerFocus ? " hidden" : "")
           }
-          onClick={() => {
-            setTimerFocus(true);
-          }}
+          onClick={handleClick}
         >
           {formatTimer(timer)}
         </h1>
-        <span className={"flex justify-center items-center text-main-textcolor text-8xl max-md:text-6xl p-4 text-center font-notoSans" + (timerFocus ? "" : " hidden")} ref={inputRefMinutes}>
+        <span
+          className={
+            "flex justify-center items-center text-main-textcolor text-8xl max-md:text-6xl p-4 text-center font-notoSans" +
+            (timerFocus ? "" : " hidden")
+          }
+        >
           <input
             ref={inputRefMinutes}
             type="number"
@@ -93,18 +111,26 @@ function Timer() {
             type="number"
             placeholder="ss"
             min="0"
+            max="59"
             className="bg-transparent focus:outline-main-backgroundcolordarker w-36"
             onBlur={handleBlur}
           />
         </span>
       </div>
       <span className="flex max-md:justify-around justify-center gap-5">
-        <button
+        {isRunning?
+        (<button
+          className="bg-main-buttoncolor size-10 rounded-sm active:scale-95"
+          onClick={handlePause}
+        >
+          <BsPause className="text-main-textcolor size-full" />
+        </button>) :
+        (<button
           className="bg-main-buttoncolor size-10 rounded-sm active:scale-95"
           onClick={handleStart}
         >
           <BsPlay className="text-main-textcolor size-full" />
-        </button>
+        </button>)}
         <button
           className="bg-main-buttoncolor size-10 rounded-sm active:scale-95"
           onClick={handleStop}

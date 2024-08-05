@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
-import { motion } from "framer-motion";
 
 import "./globals.css";
 import Links from "./components/Links";
@@ -12,16 +11,21 @@ export const metadata: Metadata = {
   description: "The Master of Tasks",
 };
 
+import { StopwatchProvider } from "./context/StopwatchContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+
   return (
     <html lang="en">
       <body className="h-dvh] bg-main-backgroundcolordarker">
         <Links />
-        {children}
+        <StopwatchProvider>{children}</StopwatchProvider>
       </body>
     </html>
   );

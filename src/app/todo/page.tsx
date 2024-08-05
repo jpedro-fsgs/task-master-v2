@@ -1,21 +1,40 @@
 "use client";
 
-import { AnimatePresence, Reorder, useDragControls } from "framer-motion";
-import React, { useRef, useState } from "react";
-import { BsChevronUp, BsChevronDown, BsX, BsPlus } from "react-icons/bs";
+import { AnimatePresence, Reorder } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { BsPlus } from "react-icons/bs";
 import TodoItem from "./components/TodoItem";
 
+interface TaskList {
+  id: number,
+  task: string
+}
+
 function Todo() {
-  const [taskList, setTaskList] = useState([{ id: 1, task: "Enter a Task" }]);
+  
+  const [taskList, setTaskList] = useState<TaskList[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const storedTaskList = localStorage.getItem("taskList");
+    if(storedTaskList) setTaskList(JSON.parse(storedTaskList))
+    else setTaskList([{ id: 1, task: "Enter a Task" }]);
+  }, []);
 
   function addTask() {
     if (inputRef.current === null || inputRef.current.value === "") return;
 
     const newTask = { id: Date.now(), task: inputRef.current.value };
-    setTaskList((t) => [newTask, ...t]);
+    setTaskList((t: TaskList[]) => [newTask, ...t]);
     inputRef.current.value = "";
+    localStorage.setItem("taskList", JSON.stringify(taskList));
+
   }
+
+  useEffect(() => {
+    if(taskList.length === 0) return;
+    localStorage.setItem("taskList", JSON.stringify(taskList));
+  }, [taskList]);
 
   function handleEnter(event: any) {
     if (event.keyCode === 13) addTask();
