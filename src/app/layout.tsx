@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
+import { motion } from "framer-motion";
 
 import "./globals.css";
 import Links from "./components/Links";
@@ -16,11 +17,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
-      <body className=" bg-main-backgroundcolordarker">
-        <Links/>
+      <body className="h-dvh] bg-main-backgroundcolordarker">
+        <Links />
         {children}
       </body>
     </html>

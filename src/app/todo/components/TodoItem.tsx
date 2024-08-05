@@ -2,7 +2,7 @@
 
 import { Reorder, useDragControls } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { BsGripHorizontal, BsGripVertical, BsX } from "react-icons/bs";
+import { BsGripVertical, BsList, BsX } from "react-icons/bs";
 
 interface TaskItem {
   id: number;
@@ -36,7 +36,7 @@ function TodoItem({
     >
       <span className="flex items-center gap-2 w-5/6">
         <button onPointerDown={(e) => controls.start(e)} style={{touchAction: "none"}} className="size-8">
-          <BsGripVertical className="size-full" />
+          <BsList className="size-full" />
         </button>
         <p className="">{index + 1}</p>
         <p className=" w-5/6">{taskItem.task}</p>

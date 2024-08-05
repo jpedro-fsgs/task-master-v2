@@ -8,7 +8,7 @@ import { PiMetronome } from "react-icons/pi";
 
 function Links() {
   const pathname = usePathname();
-  const active = "font-extrabold max-md:text-main-backgroundcolorlighter";
+  const active = "font-extrabold max-md:text-main-backgroundcolordarker";
 
   return (
     <nav className="fixed bottom-0 md:top-0 max-md:justify-between w-full font-notoSans bg-main-buttoncolor h-14 text-main-textcolor text-3xl flex items-center p-5 gap-7">
