@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
 
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 import { StopwatchProvider } from "./context/StopwatchContext";
 import { TimerProvider } from "./context/TimerContext";
 import { MetronomeProvider } from "./context/MetronomeContext";
+import SwipeTransition from "./components/SwipeTransition";
 
 export default function RootLayout({
   children,
@@ -23,16 +25,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className=" bg-main-backgroundcolordarker">
-        <header>
+        <SwipeTransition><header>
           <Links />
         </header>
         <MetronomeProvider>
           <TimerProvider>
             <StopwatchProvider>
-              <main>{children}</main>
+              {children}
             </StopwatchProvider>
           </TimerProvider>
-        </MetronomeProvider>
+        </MetronomeProvider></SwipeTransition>
       </body>
     </html>
   );

@@ -53,7 +53,7 @@ function Todo() {
       <span className="bg-main-textcolor p-3 mb-4 flex font-notoSans text-xl font-semibold justify-between items-center rounded-sm">
         <input
           placeholder="Enter Task"
-          className="bg-main-textcolor border-none focus:outline-none w-5/6"
+          className="bg-main-textcolor border-none focus:outline-none w-5/6 placeholder-main-backgroundcolordarker placeholder-opacity-55"
           ref={inputRef}
           onKeyDown={handleEnter}
           // id="addTask"

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
-function Clock() {
+function Alarm() {
   const [horario, setHorario] = useState<string>("");
   const [data, setData] = useState<string>("");
 
@@ -25,4 +25,4 @@ function Clock() {
   );
 }
 
-export default Clock;
+export default Alarm;

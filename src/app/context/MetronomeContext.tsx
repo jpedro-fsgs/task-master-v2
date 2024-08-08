@@ -45,9 +45,8 @@ export function MetronomeProvider({ children }: any) {
   useEffect(() => {
     if (isRunning) {
       bpmIntervalRef.current = setInterval(() => {
-        // new Audio("/metronome.mp3").play();
         metronomeAudio.current?.play();
-      }, Math.floor(60000 / bpm));
+      }, (60000 / bpm));
     }
     return () => {
       if(bpmIntervalRef.current){

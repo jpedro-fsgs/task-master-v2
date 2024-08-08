@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { BsChevronDown, BsChevronUp, BsPause, BsPlay } from "react-icons/bs";
 import { MetronomeContext } from "../context/MetronomeContext";
 
@@ -22,7 +22,7 @@ function Metronome() {
   const downButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-
+    console.log(document.referrer);
     function handleKeyDown(event: KeyboardEvent){
       if (event.code === "Space") {
         event.preventDefault();
@@ -77,6 +77,15 @@ function Metronome() {
         max={250}
         value={bpm}
         onChange={handleSliderChange}
+        // onMouseDown={(e) => e.stopPropagation()}
+        // onMouseUp={(e) => e.stopPropagation()}
+        // onMouseMove={(e) => e.stopPropagation()}
+        // onTouchMove={(e) => e.stopPropagation()}
+        // onTouchStart={(e) => e.stopPropagation()}
+        onTouchStartCapture={(e) => e.stopPropagation()}
+        onTouchEndCapture={(e) => e.stopPropagation()}
+        // onTouchEnd={(e) => e.stopPropagation()}
+        // onTouchCancel={(e) => e.stopPropagation()}
       />
       <span className="mx-auto">
         {isRunning ? (

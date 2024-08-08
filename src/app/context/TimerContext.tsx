@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useEffect, useRef, useState } from "react";
+import { Howl } from "howler";
 
 export const TimerContext = createContext<any>(undefined);
 
@@ -13,8 +14,7 @@ export function TimerProvider({ children }: any) {
   const beepAudio = useRef<any>(null);
 
   useEffect(() => {
-    beepAudio.current = new Audio("/beep.mp3");
-    // inputRef.current.value = setInputValue(timer);
+    beepAudio.current = new Howl({src: "/beep.mp3"});
   }, []);
 
   useEffect(() => {

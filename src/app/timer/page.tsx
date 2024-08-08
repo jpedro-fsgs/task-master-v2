@@ -27,7 +27,6 @@ function Timer() {
   const pauseButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    console.log(setInputValue(timer));
     inputRef.current.value = setInputValue(timer);
     
     function handleKeyDown(event: KeyboardEvent) {
@@ -41,10 +40,10 @@ function Timer() {
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [inputRef]);
+  }, [inputRef]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div tabIndex={0} className="bg-main-backgroundcolorlighter rounded max-w-[50rem] max-h-[80vh] mx-auto max-md:mx-5 p-10 mt-[25vh] max-sm:mt-[20vh] flex flex-col gap-5">
+    <div tabIndex={0} className="bg-main-backgroundcolorlighter rounded max-w-[50rem] max-h-[80vh] mx-auto max-md:mx-5 p-10 mt-[25vh] max-sm:mt-[20vh] flex flex-col gap-5"> 
       <div className="flex flex-col justify-center h-36">
         <h1
           className={
@@ -68,14 +67,14 @@ function Timer() {
       </div>
       <span className="flex max-md:justify-around justify-center gap-5">
         <button
-          className="bg-main-buttoncolor size-10 rounded-sm active:scale-95"
+          className="bg-main-buttoncolor h-10 w-20 rounded-sm active:scale-95"
           onClick={handleStop}
         >
           <BsStop className="text-main-textcolor size-full" />
         </button>
         {isRunning ? (
           <button
-            className="bg-main-buttoncolor size-10 rounded-sm active:scale-95"
+            className="bg-main-buttoncolor h-10 w-20 rounded-sm active:scale-95"
             onClick={handlePause}
             ref={pauseButton}
           >
@@ -83,7 +82,7 @@ function Timer() {
           </button>
         ) : (
           <button
-            className="bg-main-buttoncolor size-10 rounded-sm active:scale-95"
+            className="bg-main-buttoncolor h-10 w-20 rounded-sm active:scale-95"
             onClick={handleStart}
             ref={playButton}
           >

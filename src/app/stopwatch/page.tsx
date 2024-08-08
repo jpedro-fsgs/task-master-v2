@@ -66,7 +66,7 @@ function Stopwatch() {
   }, []);
 
   return (
-    <div className="bg-main-backgroundcolorlighter rounded max-w-[50rem] max-h-[80vh] mx-auto max-md:mx-5 p-10 my-24 max-sm:mt-5 flex flex-col gap-9">
+    <div className="bg-main-backgroundcolorlighter rounded max-w-[50rem] max-h-[80vh] mx-auto max-md:mx-5 p-10 mt-24 max-sm:mt-5 flex flex-col gap-9">
       <h1 className="text-main-textcolor text-8xl max-md:text-6xl text-center font-notoSans break-words">
         {formatStopwatch(stopwatch)}
       </h1>
@@ -114,13 +114,13 @@ function Stopwatch() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
-                <p className="size-full text-left flex items-center text-slate-500">
+                <p className="size-full text-left flex items-center text-main-backgroundcolordarker opacity-55">
                   {array.length - index}
                 </p>
                 <p className="size-full text-center">
                   {formatStopwatch(split)}
                 </p>
-                <p className="size-full text-right text-sm text-slate-500">
+                <p className="size-full text-right text-sm text-main-backgroundcolordarker opacity-55">
                   +{formatSplit(split - (array[index + 1] || 0))}
                 </p>
               </motion.div>
