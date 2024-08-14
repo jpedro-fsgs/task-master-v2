@@ -1,18 +1,17 @@
 "use client";
 
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { BsAlarm, BsPlus, BsX } from "react-icons/bs";
 import { ClockContext } from "../context/ClockContext";
 
 import AlarmInput from "./components/AlarmInput";
-import AlarmMessage from "./components/AlarmMessage";
 import { AlarmContext, AlarmInterface } from "./components/AlarmContext";
 import { AnimatePresence, motion } from "framer-motion";
 
 function Alarm() {
   const { alarmsList, removeAlarm } = useContext(AlarmContext);
 
-  const { time, date } = useContext(ClockContext);
+  const { date, fullTime } = useContext(ClockContext);
   const [isInputOpen, setIsInputOpen] = useState(false);
 
   return (
@@ -22,7 +21,7 @@ function Alarm() {
           {date}
         </h2>
         <h1 className="text-main-textcolor text-8xl max-md:text-6xl text-center font-notoSans break-words">
-          {time}
+          {fullTime}
         </h1>
         <button
           className="bg-main-buttoncolor text-main-textcolor mt-5 h-10 p-1 rounded-sm active:scale-95 flex"

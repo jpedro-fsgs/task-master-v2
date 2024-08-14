@@ -6,18 +6,19 @@ export const ClockContext = createContext<any>(undefined);
 
 export function ClockProvider({ children }: { children: React.ReactNode }) {
 
-  const [rawDate, setRawDate] = useState<Date>();
   const [date, setDate] = useState<string>();
+  const [fullTime, setFullTime] = useState<string>();
   const [time, setTime] = useState<string>();
 
   useEffect(() => {
     const timeInterval = setInterval(() => {
         const currentDate = new Date();
-        setRawDate(currentDate);
+        setTime(currentDate.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"}));
+        setFullTime(currentDate.toLocaleTimeString());
         setDate(currentDate.toLocaleDateString());
-        setTime(currentDate.toLocaleTimeString());
-      return () => clearInterval(timeInterval);
+
     }, 1000);
+    return () => clearInterval(timeInterval);
   }, []);
-  return <ClockContext.Provider value={{rawDate, date, time}}>{children}</ClockContext.Provider>;
+  return <ClockContext.Provider value={{date, fullTime, time}}>{children}</ClockContext.Provider>;
 }

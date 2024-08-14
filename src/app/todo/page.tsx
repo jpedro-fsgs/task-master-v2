@@ -56,7 +56,6 @@ function Todo() {
           className="bg-main-textcolor border-none focus:outline-none w-5/6 placeholder-main-backgroundcolordarker placeholder-opacity-55"
           ref={inputRef}
           onKeyDown={handleEnter}
-          // id="addTask"
         ></input>
         <button
           className="bg-main-buttoncolor size-8 rounded-sm active:scale-95"

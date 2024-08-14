@@ -3,19 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useContext } from "react";
-import {
-  BsAlarm,
-  BsHourglass,
-  BsSliders2,
-  BsStopwatch,
-} from "react-icons/bs";
+import { BsAlarm, BsHourglass, BsSliders2, BsStopwatch } from "react-icons/bs";
 import { LiaListAltSolid } from "react-icons/lia";
 import { PiMetronome } from "react-icons/pi";
 import { ClockContext } from "../context/ClockContext";
 
 function Links() {
   const pathname = usePathname();
-  const { time, date } = useContext(ClockContext);
+  const { time } = useContext(ClockContext);
 
   const active = "font-extrabold max-lg:text-main-backgroundcolordarker";
 
@@ -76,10 +71,7 @@ function Links() {
         </p>
         <Link
           href="/"
-          className={
-            "hover:opacity-85" +
-            (pathname === "/" ? active : "")
-          }
+          className={"hover:opacity-85" + (pathname === "/" ? active : "")}
         >
           <span className="flex items-center gap-1">
             <BsSliders2 size={33} />
