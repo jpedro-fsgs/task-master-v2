@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
 
@@ -16,6 +15,8 @@ import { StopwatchProvider } from "./context/StopwatchContext";
 import { TimerProvider } from "./context/TimerContext";
 import { MetronomeProvider } from "./context/MetronomeContext";
 import SwipeTransition from "./components/SwipeTransition";
+import { ClockProvider } from "./context/ClockContext";
+import { AlarmProvider } from "./alarm/components/AlarmContext";
 
 export default function RootLayout({
   children,
@@ -25,16 +26,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className=" bg-main-backgroundcolordarker">
-        <SwipeTransition><header>
-          <Links />
-        </header>
-        <MetronomeProvider>
-          <TimerProvider>
-            <StopwatchProvider>
-              {children}
-            </StopwatchProvider>
-          </TimerProvider>
-        </MetronomeProvider></SwipeTransition>
+        <AlarmProvider>
+          <SwipeTransition>
+            <ClockProvider>
+              <header>
+                <Links />
+              </header>
+
+              <MetronomeProvider>
+                <TimerProvider>
+                  <StopwatchProvider>{children}</StopwatchProvider>
+                </TimerProvider>
+              </MetronomeProvider>
+            </ClockProvider>
+          </SwipeTransition>
+        </AlarmProvider>
       </body>
     </html>
   );

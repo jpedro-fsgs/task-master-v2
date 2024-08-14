@@ -23,7 +23,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
       <AnimatePresence >
         <motion.div
-          {...(["/todo", "/stopwatch"].includes(path)
+          {...(["/todo", "/stopwatch", "/alarm"].includes(path)
             ? upAnimations
             : downAnimations)}
         >

@@ -22,6 +22,9 @@ const config: Config = {
       fontFamily: {
         notoSans: ["Noto Sans", "sans-serif"],
       },
+      boxShadow: {
+        'button-glow': '0 0 2px #FAEDF0, inset 0 0 2px #FAEDF0, 0 0 5px #EC255A, 0 0 15px #EC255A, 0 0 30px #EC255A',
+      },
     },
   },
   plugins: [],

@@ -1,10 +1,10 @@
 "use client";
 
-import { createContext, useCallback, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 
 export const StopwatchContext = createContext<any>(undefined);
 
-export function StopwatchProvider({ children }: any) {
+export function StopwatchProvider({ children }: { children: React.ReactNode }) {
   const [splitList, setSplitList] = useState<number[]>([]);
 
   const [stopwatch, setStopwatch] = useState(0);
@@ -12,22 +12,22 @@ export function StopwatchProvider({ children }: any) {
   const intervalRef = useRef<any>(null);
   const startTime = useRef(0);
 
-  function handleStart(){
+  function handleStart() {
     if (isRunning) return;
     setIsRunning(true);
   }
 
-  function handleStop(){
+  function handleStop() {
     setIsRunning(false);
     setStopwatch(0);
     setSplitList([]);
   }
-  function handlePause(){
-    if(!isRunning) return;
+  function handlePause() {
+    if (!isRunning) return;
     setIsRunning(false);
   }
-  
-  function handleSplit(){
+
+  function handleSplit() {
     if (splitList.includes(stopwatch) || stopwatch === 0) return;
     const updatedSplitList = [...splitList, stopwatch];
     setSplitList(updatedSplitList);

@@ -5,7 +5,7 @@ import { Howl } from "howler";
 
 export const TimerContext = createContext<any>(undefined);
 
-export function TimerProvider({ children }: any) {
+export function TimerProvider({ children }: { children: React.ReactNode }) {
   const [timer, setTimer] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 

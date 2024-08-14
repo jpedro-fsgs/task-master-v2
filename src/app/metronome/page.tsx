@@ -4,8 +4,9 @@ import React, { useContext, useEffect, useRef } from "react";
 import { BsChevronDown, BsChevronUp, BsPause, BsPlay } from "react-icons/bs";
 import { MetronomeContext } from "../context/MetronomeContext";
 
+
 function Metronome() {
-  const{
+  const {
     bpm,
     handleUp,
     handleDown,
@@ -13,7 +14,7 @@ function Metronome() {
     handlePause,
     handleStart,
     isRunning,
-
+    buttonGlowActive,
   } = useContext(MetronomeContext);
 
   const pauseButton = useRef<HTMLButtonElement>(null);
@@ -23,7 +24,7 @@ function Metronome() {
 
   useEffect(() => {
     console.log(document.referrer);
-    function handleKeyDown(event: KeyboardEvent){
+    function handleKeyDown(event: KeyboardEvent) {
       if (event.code === "Space") {
         event.preventDefault();
         if (playButton.current) {
@@ -33,14 +34,14 @@ function Metronome() {
         if (pauseButton.current) pauseButton.current.click();
         return;
       }
-      if (event.code === "ArrowUp"){
+      if (event.code === "ArrowUp") {
         event.preventDefault();
-        if(upButton.current) upButton.current.click();
+        if (upButton.current) upButton.current.click();
         return;
       }
-      if (event.code === "ArrowDown"){
+      if (event.code === "ArrowDown") {
         event.preventDefault();
-        if(downButton.current) downButton.current.click();
+        if (downButton.current) downButton.current.click();
       }
     }
     window.addEventListener("keydown", handleKeyDown);
@@ -50,7 +51,11 @@ function Metronome() {
   return (
     <div className="bg-main-backgroundcolorlighter rounded max-w-[50rem] max-h-[80vh] mx-auto max-md:mx-5 p-10 mt-[25vh] max-sm:mt-[20vh] flex flex-col gap-5 border-main-buttoncolor ">
       <span className="flex mx-auto gap-5">
-        <h1 className={"text-main-textcolor w-48 text-8xl text-center font-notoSans "}>
+        <h1
+          className={
+            "text-main-textcolor w-48 text-8xl text-center font-notoSans "
+          }
+        >
           {bpm}
         </h1>
         <span className="flex flex-col max-md:justify-around justify-center gap-5">
@@ -90,7 +95,10 @@ function Metronome() {
       <span className="mx-auto">
         {isRunning ? (
           <button
-            className="bg-main-buttoncolor h-10 w-32 rounded-sm active:scale-95"
+            className={
+              "bg-main-buttoncolor h-10 w-32 rounded-sm active:scale-95" +
+              (buttonGlowActive ? " shadow-button-glow" : "")
+            }
             onClick={handlePause}
             ref={pauseButton}
           >

@@ -5,12 +5,14 @@ import { Howl } from "howler";
 
 export const MetronomeContext = createContext<any>(undefined);
 
-export function MetronomeProvider({ children }: any) {
+export function MetronomeProvider({ children }: { children: React.ReactNode }) {
   const [bpm, setBpm] = useState(100);
   const [isRunning, setIsRunning] = useState(false);
 
   const bpmIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const metronomeAudio = useRef<Howl | null>(null);
+
+  const [buttonGlowActive, setButtonGlowActive] = useState(false);
 
   function handleStart() {
     if (isRunning) return;
@@ -46,6 +48,10 @@ export function MetronomeProvider({ children }: any) {
     if (isRunning) {
       bpmIntervalRef.current = setInterval(() => {
         metronomeAudio.current?.play();
+
+        setButtonGlowActive(true)
+        setTimeout(() => setButtonGlowActive(false), 80);
+        
       }, (60000 / bpm));
     }
     return () => {
@@ -72,6 +78,7 @@ export function MetronomeProvider({ children }: any) {
         handlePause,
         handleStart,
         isRunning,
+        buttonGlowActive
       }}
     >
       {children}
