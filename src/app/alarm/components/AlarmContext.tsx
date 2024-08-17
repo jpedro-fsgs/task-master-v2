@@ -18,6 +18,8 @@ interface AlarmData {
   songNumber: number;
 }
 
+const songs = ["/alarm1.mp3", "/alarm2.mp3"];
+
 function setAlarmData({ time, title, songNumber }: AlarmInterface) {
   return {
     time,
@@ -39,8 +41,6 @@ function getAlarmData(stringData: string) {
     };
   }).filter(({ time }: AlarmInterface) => time.getTime() > Date.now());
 }
-
-const songs = ["/alarm1.mp3", "/alarm2.mp3"];
 
 export const AlarmContext = createContext<any>(undefined);
 

@@ -41,7 +41,7 @@ function Alarm() {
             .map((alarm: AlarmInterface) => (
               <motion.li
                 key={alarm.id}
-                className="mx-auto w-full p-2 gap-2 rounded-sm bg-main-textcolor font-notoSans text-xl flex items-center"
+                className="mx-auto w-full md:w-2/4 p-2 gap-2 rounded-sm bg-main-textcolor font-notoSans text-xl flex items-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

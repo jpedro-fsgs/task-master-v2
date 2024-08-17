@@ -65,7 +65,7 @@ function Links() {
           <p className="max-lg:hidden">Metronome</p>
         </span>
       </Link>
-      <span className="flex items-center lg:justify-self-end lg:ml-auto">
+      {/* <span className="flex items-center lg:justify-self-end lg:ml-auto">
         <p className="max-md:hidden mr-4">
           {time}
         </p>
@@ -77,7 +77,7 @@ function Links() {
             <BsSliders2 size={33} />
           </span>
         </Link>
-      </span>
+      </span> */}
     </nav>
   );
 }
