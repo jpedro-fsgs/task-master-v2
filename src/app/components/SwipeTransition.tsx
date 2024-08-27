@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useSwipeable } from "react-swipeable";
 
-const paths = ["/todo", "/alarm", "/stopwatch", "/timer", "/metronome", "/"];
+const paths = ["/todo", "/alarm", "/stopwatch", "/timer", "/metronome", "/settings"];
 
 function SwipeTransition({ children }: { children: React.ReactNode }) {
     const path = usePathname();

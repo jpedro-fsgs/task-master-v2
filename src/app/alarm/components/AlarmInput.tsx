@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext, useRef } from "react";
-import { AlarmContext } from "./AlarmContext";
+import { AlarmContext } from "../../context/AlarmContext";
 import { AnimatePresence, motion } from "framer-motion";
 
 const upAnimations = {

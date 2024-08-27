@@ -23,7 +23,6 @@ function Metronome() {
   const downButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    console.log(document.referrer);
     function handleKeyDown(event: KeyboardEvent) {
       if (event.code === "Space") {
         event.preventDefault();
@@ -49,7 +48,7 @@ function Metronome() {
   }, []);
 
   return (
-    <div className="bg-main-backgroundcolorlighter rounded max-w-[50rem] max-h-[80vh] mx-auto max-md:mx-5 p-10 mt-[25vh] max-sm:mt-[20vh] flex flex-col gap-5 border-main-buttoncolor ">
+    <div className="bg-main-backgroundcolorlighter rounded max-w-[50rem] max-h-[80vh] mx-auto max-md:mx-5 p-10 mt-[25vh] max-sm:mt-[20vh] flex flex-col gap-5">
       <span className="flex mx-auto gap-5">
         <h1
           className={
@@ -82,15 +81,8 @@ function Metronome() {
         max={250}
         value={bpm}
         onChange={handleSliderChange}
-        // onMouseDown={(e) => e.stopPropagation()}
-        // onMouseUp={(e) => e.stopPropagation()}
-        // onMouseMove={(e) => e.stopPropagation()}
-        // onTouchMove={(e) => e.stopPropagation()}
-        // onTouchStart={(e) => e.stopPropagation()}
         onTouchStartCapture={(e) => e.stopPropagation()}
         onTouchEndCapture={(e) => e.stopPropagation()}
-        // onTouchEnd={(e) => e.stopPropagation()}
-        // onTouchCancel={(e) => e.stopPropagation()}
       />
       <span className="mx-auto">
         {isRunning ? (

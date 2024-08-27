@@ -16,7 +16,7 @@ import { TimerProvider } from "./context/TimerContext";
 import { MetronomeProvider } from "./context/MetronomeContext";
 import SwipeTransition from "./components/SwipeTransition";
 import { ClockProvider } from "./context/ClockContext";
-import { AlarmProvider } from "./alarm/components/AlarmContext";
+import { AlarmProvider } from "./context/AlarmContext";
 
 export default function RootLayout({
   children,

@@ -12,10 +12,35 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   const inputRef = useRef<any>(null);
   const intervalRef = useRef<any>(null);
   const beepAudio = useRef<any>(null);
+  const [timerVolume, setTimerVolume] = useState<number>(2);
+
+  const [mainVolume, setMainVolume] = useState<number>(2);
 
   useEffect(() => {
-    beepAudio.current = new Howl({src: "/beep.mp3"});
+    const storedMainVolume = localStorage.getItem("mainVolume");
+    if (storedMainVolume) setMainVolume(Number(storedMainVolume));
+    
+    const storedTimerVolume = localStorage.getItem("timerVolume");
+    if (storedTimerVolume) setTimerVolume(Number(storedTimerVolume));
+    beepAudio.current = new Howl({ src: "/beep.mp3", volume: timerVolume });
+
   }, []);
+
+  useEffect(() => {
+      Howler.volume(mainVolume);
+      if (mainVolume !== 2){
+        localStorage.setItem("mainVolume", JSON.stringify(mainVolume));
+      }
+  }, [mainVolume]);
+
+  useEffect(() => {
+    if (beepAudio.current) {
+      beepAudio.current.volume(timerVolume);
+    }
+    if (timerVolume !== 2){
+      localStorage.setItem("timerVolume", JSON.stringify(timerVolume));
+    }
+  }, [timerVolume]);
 
   useEffect(() => {
     if (isRunning) {
@@ -60,7 +85,9 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
 
   function handleChange() {
     const numeros = inputRef.current.value.replace(/\D/g, "");
-    const seconds = String(Number(numeros.slice(numeros.length - 2, numeros.length)));
+    const seconds = String(
+      Number(numeros.slice(numeros.length - 2, numeros.length))
+    );
     const minutes = String(Number(numeros.slice(0, numeros.length - 2)));
     const formatted = minutes.padStart(1, "0") + ":" + seconds.padStart(2, "0");
     inputRef.current.value = formatted;
@@ -88,7 +115,11 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
         handlePause,
         handleStop,
         handleChange,
-        setInputValue
+        setInputValue,
+        timerVolume,
+        setTimerVolume,
+        mainVolume,
+        setMainVolume
       }}
     >
       {children}

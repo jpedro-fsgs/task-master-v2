@@ -5,7 +5,7 @@ import { BsAlarm, BsPlus, BsX } from "react-icons/bs";
 import { ClockContext } from "../context/ClockContext";
 
 import AlarmInput from "./components/AlarmInput";
-import { AlarmContext, AlarmInterface } from "./components/AlarmContext";
+import { AlarmContext, AlarmInterface } from "../context/AlarmContext";
 import { AnimatePresence, motion } from "framer-motion";
 
 function Alarm() {

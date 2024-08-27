@@ -65,19 +65,19 @@ function Links() {
           <p className="max-lg:hidden">Metronome</p>
         </span>
       </Link>
-      {/* <span className="flex items-center lg:justify-self-end lg:ml-auto">
+      <span className="flex items-center lg:justify-self-end lg:ml-auto">
         <p className="max-md:hidden mr-4">
           {time}
         </p>
         <Link
-          href="/"
-          className={"hover:opacity-85" + (pathname === "/" ? active : "")}
+          href="/settings"
+          className={"hover:opacity-85" + (pathname === "/settings" ? active : "")}
         >
           <span className="flex items-center gap-1">
             <BsSliders2 size={33} />
           </span>
         </Link>
-      </span> */}
+      </span>
     </nav>
   );
 }

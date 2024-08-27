@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { BsPause, BsPlay, BsStop } from "react-icons/bs";
 import { TimerContext } from "../context/TimerContext";
 

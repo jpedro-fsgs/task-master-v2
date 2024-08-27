@@ -11,6 +11,7 @@ export function MetronomeProvider({ children }: { children: React.ReactNode }) {
 
   const bpmIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const metronomeAudio = useRef<Howl | null>(null);
+  const [metronomeVolume, setMetronomeVolume] = useState<number>(2);
 
   const [buttonGlowActive, setButtonGlowActive] = useState(false);
 
@@ -40,7 +41,7 @@ export function MetronomeProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    if(bpm === 100) return;
+    if (bpm === 100) return;
     localStorage.setItem("bpm", JSON.stringify(bpm));
   }, [bpm]);
 
@@ -49,24 +50,40 @@ export function MetronomeProvider({ children }: { children: React.ReactNode }) {
       bpmIntervalRef.current = setInterval(() => {
         metronomeAudio.current?.play();
 
-        setButtonGlowActive(true)
+        setButtonGlowActive(true);
         setTimeout(() => setButtonGlowActive(false), 80);
-        
-      }, (60000 / bpm));
+      }, 60000 / bpm);
     }
     return () => {
-      if(bpmIntervalRef.current){
-        clearInterval(bpmIntervalRef.current)
-      };
-    }
+      if (bpmIntervalRef.current) {
+        clearInterval(bpmIntervalRef.current);
+      }
+    };
   }, [isRunning, bpm]);
 
   useEffect(() => {
-    metronomeAudio.current = new Howl({src: ["/metronome.mp3"], autoplay: false});
-    
+    const storedMetronomeVolume = localStorage.getItem("metronomeVolume");
+    if (storedMetronomeVolume)
+      setMetronomeVolume(Number(storedMetronomeVolume));
+
+    metronomeAudio.current = new Howl({
+      src: ["/metronome.mp3"],
+      autoplay: false,
+      volume: metronomeVolume,
+    });
+
     const storedBpm = localStorage.getItem("bpm");
-    if(storedBpm) setBpm(Number(localStorage.getItem("bpm")));
+    if (storedBpm) setBpm(Number(localStorage.getItem("bpm")));
   }, []);
+
+  useEffect(() => {
+    if (metronomeAudio.current) {
+      metronomeAudio.current.volume(metronomeVolume);
+    }
+    if (metronomeVolume != 2){
+      localStorage.setItem("metronomeVolume", JSON.stringify(metronomeVolume));
+    }
+  }, [metronomeVolume]);
 
   return (
     <MetronomeContext.Provider
@@ -78,7 +95,9 @@ export function MetronomeProvider({ children }: { children: React.ReactNode }) {
         handlePause,
         handleStart,
         isRunning,
-        buttonGlowActive
+        buttonGlowActive,
+        setMetronomeVolume,
+        metronomeVolume,
       }}
     >
       {children}

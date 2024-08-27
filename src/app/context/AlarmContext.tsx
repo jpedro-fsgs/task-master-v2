@@ -1,7 +1,8 @@
 "use client";
 
 import { createContext, useEffect, useRef, useState } from "react";
-import AlarmMessage from "./AlarmMessage";
+import AlarmMessage from "../alarm/components/AlarmMessage";
+import { Howl } from "howler";
 
 export interface AlarmInterface {
   id: number;
@@ -18,8 +19,6 @@ interface AlarmData {
   songNumber: number;
 }
 
-const songs = ["/alarm1.mp3", "/alarm2.mp3"];
-
 function setAlarmData({ time, title, songNumber }: AlarmInterface) {
   return {
     time,
@@ -28,31 +27,52 @@ function setAlarmData({ time, title, songNumber }: AlarmInterface) {
   };
 }
 
-function getAlarmData(stringData: string) {
-  const data = JSON.parse(stringData);
-  return data.map(({ time, title, songNumber }: AlarmData) => {
-    return {
-      id: Date.now(),
-      time: new Date(time),
-      title,
-      song: new Howl({ src: songs[songNumber] }),
-      songNumber,
-      timeout: undefined,
-    };
-  }).filter(({ time }: AlarmInterface) => time.getTime() > Date.now());
-}
-
 export const AlarmContext = createContext<any>(undefined);
 
 export function AlarmProvider({ children }: { children: React.ReactNode }) {
   const [alarmsList, setAlarmsList] = useState<AlarmInterface[]>([]);
 
   const currentAlarm = useRef<AlarmInterface | null>(null);
+  const [alarmVolume, setAlarmVolume] = useState<number>(2);
 
   const [alarmMessageIsOpen, setAlarmMessageIsOpen] = useState(false);
 
+  const songs = useRef<Howl[]>([]);
+
   useEffect(() => {
+    if(songs.current){
+      songs.current.forEach(song => song.volume(alarmVolume));
+    }
+    if(alarmVolume != 2){
+      localStorage.setItem("alarmVolume", String(alarmVolume));
+    }
+  }, [alarmVolume]);
+
+  useEffect(() => {
+    songs.current = [
+      new Howl({ src: "/alarm1.mp3", volume: alarmVolume }),
+      new Howl({ src: "/alarm2.mp3", volume: alarmVolume }),
+    ];
+    const storedAlarmVolume = localStorage.getItem("alarmVolume");
+    if(storedAlarmVolume) setAlarmVolume(Number(storedAlarmVolume));
+    
     const storedAlarmsList = localStorage.getItem("alarmsList");
+    
+    function getAlarmData(stringData: string) {
+      const data = JSON.parse(stringData);
+      return data
+        .map(({ time, title, songNumber }: AlarmData) => {
+          return {
+            id: Date.now(),
+            time: new Date(time),
+            title,
+            song: songs.current[songNumber],
+            songNumber,
+            timeout: undefined,
+          };
+        })
+        .filter(({ time }: AlarmInterface) => time.getTime() > Date.now());
+    }
     if (storedAlarmsList !== null)
       setAlarmsList(getAlarmData(storedAlarmsList));
   }, []);
@@ -73,7 +93,7 @@ export function AlarmProvider({ children }: { children: React.ReactNode }) {
       id: Date.now(),
       time: dataAtual,
       title: title,
-      song: new Howl({ src: songs[songNumber] }),
+      song: songs.current[songNumber],
       songNumber,
       timeout: undefined,
     };
@@ -129,6 +149,8 @@ export function AlarmProvider({ children }: { children: React.ReactNode }) {
         alarmsList,
         addAlarm,
         removeAlarm,
+        alarmVolume,
+        setAlarmVolume
       }}
     >
       {children}
